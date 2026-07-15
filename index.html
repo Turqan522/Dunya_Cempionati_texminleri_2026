@@ -1,1 +1,763 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏆 Dünya Çempionatı 2026 — Canlı Statistika & Proqnoz</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #FFD700;
+    --gold-dim: #c9a800;
+    --navy: #060c1f;
+    --navy2: #0d1530;
+    --navy3: #152040;
+    --navy4: #1e2d50;
+    --blue-accent: #2563eb;
+    --text: #e8f0ff;
+    --text-muted: #7a90b8;
+    --green: #22c55e;
+    --red: #ef4444;
+    --amber: #f59e0b;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(6,12,31,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,215,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    color: var(--gold);
+    padding: 0 1.2rem;
+    white-space: nowrap;
+    letter-spacing: 2px;
+    border-right: 1px solid rgba(255,215,0,0.15);
+    line-height: 52px;
+  }
+  .nav-tab {
+    padding: 0 1.1rem;
+    line-height: 52px;
+    font-size: .82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+    text-decoration: none;
+  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 5rem 1rem 4rem;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,215,0,0.12) 0%, transparent 70%),
+                linear-gradient(180deg, #0a1428 0%, var(--navy) 100%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,215,0,0.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,215,0,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 0%, black 0%, transparent 80%);
+  }
+  .hero-content { position: relative; }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: rgba(255,215,0,0.1);
+    border: 1px solid rgba(255,215,0,0.25);
+    border-radius: 20px;
+    padding: .3rem 1rem;
+    font-size: .75rem;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+  }
+  .live-dot {
+    width: 7px; height: 7px;
+    background: #ef4444;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: #fff;
+    letter-spacing: 4px;
+    line-height: 1;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    margin-top: 1rem;
+    color: var(--text-muted);
+    font-size: .9rem;
+    line-height: 1.6;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .hstat { text-align: center; }
+  .hstat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .hstat-lbl { font-size: .72rem; color: var(--text-muted); margin-top: .2rem; text-transform: uppercase; letter-spacing: .5px; }
+
+  /* ── SECTIONS ── */
+  .section { padding: 3rem 1rem; max-width: 1100px; margin: 0 auto; }
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    margin-bottom: 1.8rem;
+    padding-bottom: .8rem;
+    border-bottom: 1px solid rgba(255,215,0,0.15);
+  }
+  .section-head h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+  .section-head span { font-size: 1.6rem; }
+
+  /* ── SCORERS ── */
+  .scorers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1rem;
+  }
+  .scorer-card {
+    background: var(--navy2);
+    border: 1px solid var(--navy4);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+    transition: border-color .2s, transform .2s;
+    cursor: default;
+  }
+  .scorer-card:hover { border-color: rgba(255,215,0,0.4); transform: translateY(-3px); }
+  .scorer-card.top1 {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, #1a1500, var(--navy2));
+  }
+  .sc-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .sc-rank {
+    font-size: .7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--navy3);
+    padding: .2rem .5rem;
+    border-radius: 4px;
+  }
+  .sc-rank.g { background: #3d2e00; color: var(--gold); }
+  .sc-rank.s { background: #2a2a2a; color: #c0c0c0; }
+  .sc-rank.b { background: #2d1a0a; color: #cd7f32; }
+  .sc-flag { font-size: 1.6rem; }
+  .sc-name { font-size: 1rem; font-weight: 700; color: #fff; margin-top: .6rem; }
+  .sc-team { font-size: .75rem; color: var(--text-muted); margin-top: .1rem; }
+  .sc-goals-row { display: flex; align-items: baseline; gap: .5rem; margin-top: .8rem; }
+  .sc-goals-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+  .sc-goals-label { font-size: .72rem; color: var(--text-muted); }
+  .sc-balls { display: flex; gap: 4px; flex-wrap: wrap; margin-top: .5rem; }
+  .ball { width: 11px; height: 11px; border-radius: 50%; background: var(--gold); }
+  .ball.assist { background: #3a8fd4; }
+  .sc-note { font-size: .7rem; color: var(--amber); margin-top: .4rem; font-style: italic; }
+
+  /* ── CHAMP ── */
+  .champ-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: .9rem;
+  }
+  .champ-card {
+    background: var(--navy2);
+    border: 1px solid var(--navy4);
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .champ-card:hover { border-color: #3a8fd4; transform: translateY(-2px); }
+  .champ-card.top { border-color: var(--gold); background: linear-gradient(135deg,#1a1500,var(--navy2)); }
+  .champ-flag { font-size: 2rem; margin-bottom: .3rem; }
+  .champ-name { font-weight: 700; font-size: .95rem; color: #fff; }
+  .champ-star { font-size: .75rem; color: var(--text-muted); margin-top: .1rem; }
+  .champ-bar-wrap { background: var(--navy4); border-radius: 4px; height: 5px; margin-top: .7rem; }
+  .champ-bar { height: 5px; border-radius: 4px; background: linear-gradient(90deg, var(--gold), #ff9900); transition: width .8s ease; }
+  .champ-pct { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--gold); margin-top: .3rem; letter-spacing: 1px; }
+
+  /* ── PLAYERS TABLE ── */
+  .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--navy4); }
+  table { width: 100%; border-collapse: collapse; background: var(--navy2); }
+  thead th {
+    background: var(--navy3);
+    color: var(--text-muted);
+    font-size: .72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: .8rem 1rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+  tbody td { padding: .75rem 1rem; border-bottom: 1px solid var(--navy3); font-size: .85rem; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: rgba(255,215,0,0.03); }
+  .val-badge {
+    display: inline-block;
+    background: rgba(34,197,94,0.15);
+    color: #4ade80;
+    font-size: .75rem;
+    font-weight: 700;
+    padding: .25rem .7rem;
+    border-radius: 20px;
+  }
+  .pos-badge {
+    display: inline-block;
+    background: var(--navy3);
+    color: var(--text-muted);
+    font-size: .72rem;
+    padding: .2rem .55rem;
+    border-radius: 4px;
+  }
+  .player-name { font-weight: 600; color: #fff; }
+  .player-rank { color: var(--text-muted); font-weight: 700; }
+
+  /* ── PREDICT ── */
+  .predict-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+  .predict-card {
+    background: var(--navy2);
+    border: 1px solid var(--navy4);
+    border-radius: 12px;
+    padding: 1.2rem;
+    transition: border-color .2s;
+  }
+  .predict-card:hover { border-color: var(--navy4); }
+  .predict-card.done { border-color: rgba(255,215,0,0.3); }
+  .pc-stage { font-size: .7rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; margin-bottom: .8rem; }
+  .pc-matchup { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+  .pc-team { text-align: center; flex: 1; }
+  .pc-flag { font-size: 2rem; display: block; }
+  .pc-tname { font-size: .78rem; color: var(--text-muted); margin-top: .3rem; }
+  .pc-inputs { display: flex; align-items: center; gap: .4rem; }
+  .score-inp {
+    width: 46px; height: 44px;
+    background: var(--navy3);
+    border: 1px solid var(--navy4);
+    border-radius: 8px;
+    color: var(--gold);
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: center;
+    outline: none;
+    font-family: 'Bebas Neue', sans-serif;
+    transition: border-color .2s;
+    -moz-appearance: textfield;
+  }
+  .score-inp::-webkit-inner-spin-button, .score-inp::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .score-inp:focus { border-color: var(--gold); }
+  .vs-sep { color: var(--text-muted); font-size: .9rem; font-weight: 700; }
+  .predict-btn {
+    display: block;
+    width: 100%;
+    margin-top: .9rem;
+    background: var(--gold);
+    color: #000;
+    border: none;
+    padding: .6rem;
+    border-radius: 8px;
+    font-size: .82rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: opacity .2s, transform .1s;
+  }
+  .predict-btn:hover { opacity: .9; }
+  .predict-btn:active { transform: scale(.98); }
+  .pred-result {
+    margin-top: .7rem;
+    text-align: center;
+    font-size: .82rem;
+    font-weight: 600;
+    padding: .5rem .7rem;
+    border-radius: 8px;
+    display: none;
+  }
+  .pred-result.show { display: block; }
+  .pred-win { background: rgba(34,197,94,.12); color: #4ade80; border: 1px solid rgba(34,197,94,.2); }
+  .pred-lose { background: rgba(239,68,68,.12); color: #f87171; border: 1px solid rgba(239,68,68,.2); }
+  .pred-draw { background: rgba(245,158,11,.12); color: #fbbf24; border: 1px solid rgba(245,158,11,.2); }
+
+  /* ── BRACKET / FINAL ── */
+  .final-box {
+    background: linear-gradient(135deg, #1a1200, var(--navy2));
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .final-box h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: var(--gold);
+    letter-spacing: 3px;
+    margin-bottom: 1.2rem;
+  }
+  .final-teams { display: flex; justify-content: space-around; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .final-team { text-align: center; }
+  .final-flag { font-size: 3.5rem; display: block; }
+  .final-tname { font-size: .9rem; color: var(--text-muted); margin-top: .4rem; }
+  .final-pct { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--gold); margin-top: .2rem; }
+  .vs-big { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--text-muted); letter-spacing: 2px; }
+  .final-score-box {
+    margin-top: 1.5rem;
+    background: var(--navy);
+    border: 1px solid var(--navy4);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    display: inline-block;
+  }
+  .final-score-lbl { font-size: .72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: .4rem; }
+  .final-score { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--gold); letter-spacing: 6px; line-height: 1; }
+  .champ-label { color: var(--gold); font-weight: 700; font-size: .9rem; margin-top: .6rem; }
+
+  .rounds { display: flex; flex-direction: column; gap: 1.5rem; }
+  .round-block { }
+  .round-label {
+    font-size: .72rem;
+    color: var(--gold);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: .6rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .round-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,215,0,0.15); }
+  .round-matches { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .6rem; }
+  .match-card {
+    background: var(--navy2);
+    border: 1px solid var(--navy4);
+    border-radius: 8px;
+    padding: .7rem .9rem;
+  }
+  .match-row { display: flex; justify-content: space-between; align-items: center; padding: .2rem 0; font-size: .82rem; }
+  .match-row.winner { color: var(--gold); font-weight: 700; }
+  .match-row:not(.winner) { color: var(--text-muted); }
+  .match-score { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 1px; }
+  .match-divider { border: none; border-top: 1px solid var(--navy4); margin: .15rem 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy2);
+    border-top: 1px solid var(--navy4);
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--text-muted);
+    font-size: .78rem;
+  }
+  footer strong { color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero { padding: 3rem 1rem 2.5rem; }
+    .hero-stats { gap: 1.2rem; }
+    .hstat-num { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">⚽ DÇ 2026</div>
+  <a class="nav-tab active" href="#scorers" onclick="setActive(this)">Qolçular</a>
+  <a class="nav-tab" href="#champ" onclick="setActive(this)">Çempionluq</a>
+  <a class="nav-tab" href="#players" onclick="setActive(this)">Bahalı Oyunçular</a>
+  <a class="nav-tab" href="#predict" onclick="setActive(this)">Proqnoz</a>
+  <a class="nav-tab" href="#bracket" onclick="setActive(this)">Final Yolu</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="live-dot"></span>
+      CANLI · QRUP MƏRHƏLƏSİ
+    </div>
+    <h1>DÜNYA<br><span>ÇEMPİONATI</span><br>2026</h1>
+    <p class="hero-sub">🇺🇸 ABŞ &nbsp;·&nbsp; 🇨🇦 Kanada &nbsp;·&nbsp; 🇲🇽 Meksika<br>Statistika, proqnozlar və qolçu yarışı</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num">48</div><div class="hstat-lbl">Komanda</div></div>
+      <div class="hstat"><div class="hstat-num">104</div><div class="hstat-lbl">Oyun</div></div>
+      <div class="hstat"><div class="hstat-num">127+</div><div class="hstat-lbl">Qol</div></div>
+      <div class="hstat"><div class="hstat-num">12</div><div class="hstat-lbl">Qrup</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SCORERS -->
+<div class="section" id="scorers">
+  <div class="section-head"><span>⚽</span><h2>Qolçular — Qızıl Buynuz Yarışı</h2></div>
+  <div class="scorers-grid" id="scorersGrid"></div>
+</div>
+
+<!-- CHAMP -->
+<div class="section" id="champ" style="background: linear-gradient(180deg,transparent,rgba(13,21,48,0.8),transparent);">
+  <div class="section-head"><span>🏆</span><h2>Çempionluq Ehtimalları</h2></div>
+  <div class="champ-grid" id="champGrid"></div>
+</div>
+
+<!-- PLAYERS -->
+<div class="section" id="players">
+  <div class="section-head"><span>💰</span><h2>Ən Bahalı Futbolçular</h2></div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Oyunçu</th>
+          <th>Ölkə</th>
+          <th>Klub</th>
+          <th>Mövqe</th>
+          <th>Bazar Dəyəri</th>
+          <th>Qol/Assist</th>
+        </tr>
+      </thead>
+      <tbody id="playersBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PREDICT -->
+<div class="section" id="predict">
+  <div class="section-head"><span>🎯</span><h2>Oyun Proqnozu</h2></div>
+  <p style="color:var(--text-muted);font-size:.83rem;margin-bottom:1.2rem;">Hər oyun üçün nəticəni özün daxil et, sistem mühakimə etsin.</p>
+  <div class="predict-grid" id="predictGrid"></div>
+</div>
+
+<!-- BRACKET -->
+<div class="section" id="bracket">
+  <div class="section-head"><span>🗂</span><h2>Final Yolu — AI Proqnozu</h2></div>
+
+  <div class="final-box">
+    <h3>🏆 FİNAL PROQNOZu · 19 İyul 2026 · MetLife Stadium</h3>
+    <div class="final-teams">
+      <div class="final-team">
+        <span class="final-flag">🇫🇷</span>
+        <div class="final-tname">Fransa</div>
+        <div class="final-pct">~20%</div>
+      </div>
+      <div class="vs-big">VS</div>
+      <div class="final-team">
+        <span class="final-flag">🇦🇷</span>
+        <div class="final-tname">Argentina</div>
+        <div class="final-pct">~16%</div>
+      </div>
+    </div>
+    <div class="final-score-box">
+      <div class="final-score-lbl">AI Nəticə Proqnozu</div>
+      <div class="final-score">2 — 1</div>
+      <div class="champ-label">🏆 Çempion: FRANSA</div>
+    </div>
+  </div>
+
+  <div class="rounds" id="roundsContainer"></div>
+</div>
+
+<footer>
+  <strong>⚽ Dünya Çempionatı 2026 — Statistika & Proqnoz Portalı</strong><br>
+  Məlumatlar: FIFA.com · Fox Sports · Goal.com · NBC Sports əsasında<br>
+  <span style="opacity:.5;font-size:.7rem;">Bu sayt proqnoz məqsədi daşıyır. Rəsmi nəticələr FIFA saytındadır.</span>
+</footer>
+
+<script>
+  function setActive(el) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // ── DATA ──
+  const scorers = [
+    { rank:1, name:"Lionel Messi",     team:"Argentina",   flag:"🇦🇷", goals:6, assists:3, note:"Tarixdə ən çox qol vuran DÇ-də" },
+    { rank:2, name:"Vinícius Júnior",  team:"Braziliya",   flag:"🇧🇷", goals:5, assists:2, note:"" },
+    { rank:3, name:"Kylian Mbappé",    team:"Fransa",      flag:"🇫🇷", goals:5, assists:1, note:"2022 Qızıl Buynuz sahibi" },
+    { rank:4, name:"Erling Haaland",   team:"Norveç",      flag:"🇳🇴", goals:5, assists:0, note:"İlk DÇ-si — 4 qolla başladı" },
+    { rank:5, name:"Jonathan David",   team:"Kanada",      flag:"🇨🇦", goals:4, assists:1, note:"Qatara qarşı hetrik" },
+    { rank:6, name:"Ismael Saibari",   team:"Mərakeş",     flag:"🇲🇦", goals:3, assists:1, note:"3 oyunda 3 qol" },
+    { rank:7, name:"Folarin Balogun",  team:"ABŞ",         flag:"🇺🇸", goals:3, assists:0, note:"" },
+    { rank:8, name:"Harry Kane",       team:"İngiltərə",   flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", goals:3, assists:2, note:"2018 Qızıl Buynuz" },
+    { rank:9, name:"Lamine Yamal",     team:"İspaniya",    flag:"🇪🇸", goals:2, assists:3, note:"17 yaş — fenomen" },
+    { rank:10,name:"Cristiano Ronaldo",team:"Portuqaliya", flag:"🇵🇹", goals:2, assists:1, note:"Son DÇ-si" },
+    { rank:11,name:"Matheus Cunha",    team:"Braziliya",   flag:"🇧🇷", goals:2, assists:0, note:"" },
+    { rank:12,name:"Raul Jimenez",     team:"Meksika",     flag:"🇲🇽", goals:2, assists:0, note:"" },
+  ];
+
+  const champs = [
+    { flag:"🇫🇷", name:"Fransa",      pct:20.3, star:"Kylian Mbappé" },
+    { flag:"🇦🇷", name:"Argentina",   pct:16.0, star:"Lionel Messi" },
+    { flag:"🇪🇸", name:"İspaniya",    pct:14.5, star:"Lamine Yamal" },
+    { flag:"🇧🇷", name:"Braziliya",   pct:12.8, star:"Vinícius Júnior" },
+    { flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", name:"İngiltərə",  pct:9.2,  star:"Harry Kane" },
+    { flag:"🇩🇪", name:"Almaniya",    pct:7.1,  star:"Jamal Musiala" },
+    { flag:"🇳🇱", name:"Hollandiya",  pct:5.4,  star:"Cody Gakpo" },
+    { flag:"🇵🇹", name:"Portuqaliya", pct:4.8,  star:"C. Ronaldo" },
+    { flag:"🇳🇴", name:"Norveç",      pct:3.5,  star:"Erling Haaland" },
+    { flag:"🇲🇦", name:"Mərakeş",     pct:2.9,  star:"Ismael Saibari" },
+    { flag:"🇺🇸", name:"ABŞ",         pct:2.1,  star:"Folarin Balogun" },
+    { flag:"🇲🇽", name:"Meksika",     pct:1.8,  star:"Raul Jimenez" },
+  ];
+
+  const players = [
+    { name:"Kylian Mbappé",     flag:"🇫🇷", country:"Fransa",      club:"Real Madrid",      pos:"Hücumçu",        val:"€180M", goals:5, assists:1 },
+    { name:"Erling Haaland",    flag:"🇳🇴", country:"Norveç",      club:"Manchester City",  pos:"Hücumçu",        val:"€180M", goals:5, assists:0 },
+    { name:"Lamine Yamal",      flag:"🇪🇸", country:"İspaniya",    club:"FC Barcelona",     pos:"Qanad",          val:"€160M", goals:2, assists:3 },
+    { name:"Vinícius Júnior",   flag:"🇧🇷", country:"Braziliya",   club:"Real Madrid",      pos:"Qanad",          val:"€150M", goals:5, assists:2 },
+    { name:"Jude Bellingham",   flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", country:"İngiltərə",  club:"Real Madrid",      pos:"Yarım müdafiəçi", val:"€150M", goals:1, assists:2 },
+    { name:"Bukayo Saka",       flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", country:"İngiltərə",  club:"Arsenal",          pos:"Qanad",          val:"€150M", goals:1, assists:1 },
+    { name:"Jamal Musiala",     flag:"🇩🇪", country:"Almaniya",    club:"Bayern München",   pos:"Yarım müdafiəçi", val:"€120M", goals:2, assists:1 },
+    { name:"Pedri",             flag:"🇪🇸", country:"İspaniya",    club:"FC Barcelona",     pos:"Yarım müdafiəçi", val:"€120M", goals:1, assists:2 },
+    { name:"Phil Foden",        flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", country:"İngiltərə",  club:"Manchester City",  pos:"Yarım müdafiəçi", val:"€110M", goals:1, assists:0 },
+    { name:"Gavi",              flag:"🇪🇸", country:"İspaniya",    club:"FC Barcelona",     pos:"Yarım müdafiəçi", val:"€100M", goals:0, assists:2 },
+    { name:"Harry Kane",        flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", country:"İngiltərə",  club:"Bayern München",   pos:"Hücumçu",        val:"€100M", goals:3, assists:2 },
+    { name:"Lionel Messi",      flag:"🇦🇷", country:"Argentina",   club:"Inter Miami",      pos:"Hücumçu",        val:"€20M*", goals:6, assists:3 },
+  ];
+
+  const matches = [
+    { home:"🇦🇷", hname:"Argentina",   away:"🇩🇿", aname:"Əlcəzair",   stage:"Qrup J" },
+    { home:"🇫🇷", hname:"Fransa",       away:"🇸🇳", aname:"Seneqal",    stage:"Qrup E" },
+    { home:"🇧🇷", hname:"Braziliya",    away:"🇲🇦", aname:"Mərakeş",    stage:"Qrup C" },
+    { home:"🇪🇸", hname:"İspaniya",     away:"🇨🇻", aname:"Kabo-Verde", stage:"Qrup H" },
+    { home:"🇺🇸", hname:"ABŞ",          away:"🇵🇾", aname:"Paraqvay",   stage:"Qrup D" },
+    { home:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", hname:"İngiltərə",   away:"🇬🇭", aname:"Qana",       stage:"Qrup L" },
+    { home:"🇩🇪", hname:"Almaniya",     away:"🇲🇽", aname:"Meksika",    stage:"Qrup G" },
+    { home:"🇳🇱", hname:"Hollandiya",   away:"🇸🇪", aname:"İsveç",      stage:"Qrup F" },
+    { home:"🇵🇹", hname:"Portuqaliya", away:"🇺🇿", aname:"Özbəkistan",  stage:"Qrup K" },
+    { home:"🇳🇴", hname:"Norveç",       away:"🇮🇶", aname:"İraq",       stage:"Qrup E" },
+  ];
+
+  const rounds = [
+    {
+      label: "Yarımfinal — AI Proqnozu",
+      matches: [
+        { h:"🇫🇷 Fransa", a:"🇪🇸 İspaniya", hs:2, as:1 },
+        { h:"🇦🇷 Argentina", a:"🇧🇷 Braziliya", hs:1, as:0 },
+      ]
+    },
+    {
+      label: "Rübfinal — AI Proqnozu",
+      matches: [
+        { h:"🇫🇷 Fransa", a:"🇩🇪 Almaniya", hs:3, as:1 },
+        { h:"🇪🇸 İspaniya", a:"🇳🇱 Hollandiya", hs:2, as:0 },
+        { h:"🇦🇷 Argentina", a:"🏴󠁧󠁢󠁥󠁮󠁧󠁿 İngiltərə", hs:2, as:1 },
+        { h:"🇧🇷 Braziliya", a:"🇵🇹 Portuqaliya", hs:3, as:0 },
+      ]
+    },
+    {
+      label: "Son 16 — AI Proqnozu",
+      matches: [
+        { h:"🇫🇷 Fransa", a:"🇲🇦 Mərakeş", hs:2, as:0 },
+        { h:"🇩🇪 Almaniya", a:"🇺🇸 ABŞ", hs:2, as:1 },
+        { h:"🇪🇸 İspaniya", a:"🇳🇴 Norveç", hs:1, as:0 },
+        { h:"🇳🇱 Hollandiya", a:"🇸🇪 İsveç", hs:2, as:1 },
+        { h:"🇦🇷 Argentina", a:"🇺🇸 ABŞ", hs:3, as:1 },
+        { h:"🇧🇷 Braziliya", a:"🇲🇽 Meksika", hs:4, as:1 },
+        { h:"🏴󠁧󠁢󠁥󠁮󠁧󠁿 İngiltərə", a:"🇯🇵 Yaponiya", hs:2, as:0 },
+        { h:"🇵🇹 Portuqaliya", a:"🇲🇦 Mərakeş", hs:1, as:0 },
+      ]
+    },
+  ];
+
+  // ── BUILD SCORERS ──
+  function buildScorers() {
+    const g = document.getElementById('scorersGrid');
+    scorers.forEach(s => {
+      const rankCls = s.rank===1?'g':s.rank===2?'s':s.rank===3?'b':'';
+      const rankLabel = s.rank===1?'🥇 Lider':s.rank===2?'🥈 2-ci':s.rank===3?'🥉 3-cü':`${s.rank}-cü`;
+      const balls = Array(s.goals).fill('<span class="ball"></span>').join('')
+                  + Array(s.assists).fill('<span class="ball assist"></span>').join('');
+      g.innerHTML += `
+        <div class="scorer-card ${s.rank===1?'top1':''}">
+          <div class="sc-top">
+            <span class="sc-rank ${rankCls}">${rankLabel}</span>
+            <span class="sc-flag">${s.flag}</span>
+          </div>
+          <div class="sc-name">${s.name}</div>
+          <div class="sc-team">${s.team}</div>
+          <div class="sc-goals-row">
+            <span class="sc-goals-num">${s.goals}</span>
+            <span class="sc-goals-label">qol · <span style="color:#3a8fd4">${s.assists}</span> assist</span>
+          </div>
+          <div class="sc-balls">${balls}</div>
+          ${s.note ? `<div class="sc-note">★ ${s.note}</div>` : ''}
+        </div>`;
+    });
+  }
+
+  // ── BUILD CHAMP ──
+  function buildChamp() {
+    const g = document.getElementById('champGrid');
+    champs.forEach((c, i) => {
+      const w = Math.min(c.pct * 4, 100);
+      g.innerHTML += `
+        <div class="champ-card ${i===0?'top':''}">
+          <div class="champ-flag">${c.flag}</div>
+          <div class="champ-name">${c.name}</div>
+          <div class="champ-star">⭐ ${c.star}</div>
+          <div class="champ-bar-wrap">
+            <div class="champ-bar" style="width:${w}%"></div>
+          </div>
+          <div class="champ-pct">${c.pct}%</div>
+        </div>`;
+    });
+  }
+
+  // ── BUILD PLAYERS ──
+  function buildPlayers() {
+    const b = document.getElementById('playersBody');
+    players.forEach((p, i) => {
+      b.innerHTML += `
+        <tr>
+          <td class="player-rank">${i+1}</td>
+          <td><span class="player-name">${p.flag} ${p.name}</span></td>
+          <td style="color:#aabbdd">${p.country}</td>
+          <td style="color:var(--text-muted)">${p.club}</td>
+          <td><span class="pos-badge">${p.pos}</span></td>
+          <td><span class="val-badge">${p.val}</span></td>
+          <td style="color:var(--text-muted);font-size:.78rem">${p.goals}⚽ ${p.assists}🅰</td>
+        </tr>`;
+    });
+  }
+
+  // ── BUILD PREDICT ──
+  function buildPredict() {
+    const g = document.getElementById('predictGrid');
+    matches.forEach((m, i) => {
+      g.innerHTML += `
+        <div class="predict-card" id="pc${i}">
+          <div class="pc-stage">${m.stage}</div>
+          <div class="pc-matchup">
+            <div class="pc-team">
+              <span class="pc-flag">${m.home}</span>
+              <div class="pc-tname">${m.hname}</div>
+            </div>
+            <div class="pc-inputs">
+              <input class="score-inp" id="h${i}" type="number" min="0" max="20" placeholder="0">
+              <span class="vs-sep">:</span>
+              <input class="score-inp" id="a${i}" type="number" min="0" max="20" placeholder="0">
+            </div>
+            <div class="pc-team">
+              <span class="pc-flag">${m.away}</span>
+              <div class="pc-tname">${m.aname}</div>
+            </div>
+          </div>
+          <button class="predict-btn" onclick="doPredict(${i},'${m.hname}','${m.aname}','${m.home}','${m.away}')">Proqnozu Göndər →</button>
+          <div class="pred-result" id="pr${i}"></div>
+        </div>`;
+    });
+  }
+
+  function doPredict(i, hn, an, hf, af) {
+    const h = parseInt(document.getElementById('h'+i).value) || 0;
+    const a = parseInt(document.getElementById('a'+i).value) || 0;
+    const el = document.getElementById('pr'+i);
+    const card = document.getElementById('pc'+i);
+    let msg, cls;
+    if (h > a) { msg = `✅ Proqnozun: ${hf} ${hn} qalib — ${h}:${a}`; cls = 'pred-win'; }
+    else if (a > h) { msg = `✅ Proqnozun: ${af} ${an} qalib — ${h}:${a}`; cls = 'pred-lose'; }
+    else { msg = `🤝 Proqnozun: Bərabərlik — ${h}:${a}`; cls = 'pred-draw'; }
+    el.className = `pred-result show ${cls}`;
+    el.textContent = msg;
+    card.classList.add('done');
+  }
+
+  // ── BUILD ROUNDS ──
+  function buildRounds() {
+    const c = document.getElementById('roundsContainer');
+    rounds.forEach(r => {
+      const matchHTML = r.matches.map(m => `
+        <div class="match-card">
+          <div class="match-row winner">
+            <span>${m.h}</span>
+            <span class="match-score">${m.hs}</span>
+          </div>
+          <hr class="match-divider">
+          <div class="match-row">
+            <span>${m.a}</span>
+            <span class="match-score">${m.as}</span>
+          </div>
+        </div>`).join('');
+      c.innerHTML += `
+        <div class="round-block">
+          <div class="round-label">${r.label}</div>
+          <div class="round-matches">${matchHTML}</div>
+        </div>`;
+    });
+  }
+
+  // ── INIT ──
+  buildScorers();
+  buildChamp();
+  buildPlayers();
+  buildPredict();
+  buildRounds();
+</script>
+</body>
+</html>
 
